@@ -1,0 +1,24 @@
+{
+  "name": "Герман хэл - Монгол",
+  "short_name": "Герман хэл",
+  "description": "Монгол сурагчдад зориулсан Герман хэлний тоглоом",
+  "start_url": "/Germanhel/",
+  "display": "standalone",
+  "background_color": "#f0eeff",
+  "theme_color": "#6c5ce7",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
