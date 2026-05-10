@@ -18,7 +18,8 @@
   --muted:#7a7a9a;
   --shadow:0 8px 40px rgba(0,0,0,0.12);
 }
-html,body{width:100%;height:100dvh;margin:0;padding:0;overflow:hidden;box-sizing:border-box}
+html,body{width:100%;height:100%;margin:0;padding:0;overflow:hidden;box-sizing:border-box}
+body{min-height:100dvh}
 body{
   font-family:'Nunito',sans-serif;
   background:var(--bg);
@@ -153,7 +154,8 @@ body{
   position:fixed;inset:0;
   display:none;
   flex-direction:column;
-  height:100dvh;
+  z-index:150;
+  background:var(--bg);
 }
 #app-frame.show{display:flex;}
 
@@ -163,6 +165,7 @@ body{
   display:flex;align-items:center;
   padding:0 1rem;gap:10px;
   z-index:999;
+  flex-shrink:0;
 }
 #back-bar.eng-bar{background:linear-gradient(135deg,#ff6b35,#ff4da6);}
 #back-bar.ger-bar{background:linear-gradient(135deg,#6c5ce7,#a29bfe);}
@@ -190,9 +193,11 @@ body{
 #the-iframe{
   flex:1 1 auto;
   width:100%;
-  height:calc(100dvh - 44px);
+  min-height:0;
+  height:auto;
   border:none;
   display:block;
+  background:#fff;
 }
 
 /* Loading screen */
@@ -340,34 +345,19 @@ function openApp(lang) {
   const iframe = document.getElementById('the-iframe');
   const backBar = document.getElementById('back-bar');
 
-  // Show loading
   loading.classList.remove('hidden');
-
-  // Update back bar
-  backBar.className = 'eng-bar ger-bar'.split(' ').reduce((a,c)=>{
-    a.classList && a.classList.remove(c); return a;
-  }, backBar) || backBar;
   backBar.className = app.barClass;
   document.getElementById('bar-flag').textContent = app.flag;
   document.getElementById('bar-title').textContent = app.title;
 
-  // Hide selector
   selector.classList.add('hidden');
+  frame.classList.add('show');
 
-  // Load iframe
+  iframe.onload = () => loading.classList.add('hidden');
   iframe.src = app.file;
-  iframe.onload = () => {
-    loading.classList.add('hidden');
-    frame.classList.add('show');
-  };
 
-  // Fallback timeout
-  setTimeout(() => {
-    loading.classList.add('hidden');
-    frame.classList.add('show');
-  }, 3000);
+  setTimeout(() => loading.classList.add('hidden'), 3000);
 
-  // Save last choice
   try { localStorage.setItem('last_lang', lang); } catch(e) {}
 }
 
